@@ -4,8 +4,7 @@ To run this project you will need PHP 8.1 and 'composer' to install the dependen
 If you're using xampp to run the project, change APP_URL=http://localhost in the .env file
 If you're using Laragon, leave it as it is (I use Laragon)
 
-3. Change DB credentials
-Change DB credentials accordingly in .env file. Default:
+3. Change DB credentials in .env file. Default:
 ```
 DB_DATABASE=project_task 
 DB_CONNECTION=mysql
