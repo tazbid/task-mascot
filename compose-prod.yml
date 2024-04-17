@@ -1,0 +1,23 @@
+services:
+  jobwiseai-backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    image: jobwiseai/php:8.2-fpm-bookworm
+    container_name: jobwiseai-backend
+    hostname: jobwiseai-backend
+    restart: unless-stopped
+    working_dir: /app
+    volumes:
+      - ./:/app
+      - ./config/php/php.ini-production:/usr/local/etc/php/php.ini
+    ports:
+      - "9000:9000"
+    networks:
+      - jobwiseai
+
+networks:
+  jobwiseai:
+    driver: bridge
+    name: jobwiseainet
