@@ -1,7 +1,7 @@
 To run this project you will need PHP 8.1 and 'composer' to install the dependencies.
 
 1. Clone the project in your local machine
-	-If you're using xampp to run the project, change APP_URL=https:127.0.0.1:8000 in the .env file
+	-If you're using xampp to run the project, change APP_URL=http://localhost in the .env file
 	-If you're using Laragon, leave it as it is (I use Laragon)
 
 2. Change DB credentials
