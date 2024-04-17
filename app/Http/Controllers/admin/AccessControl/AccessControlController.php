@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Traits\UserTrait;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Spatie\Permission\Models\Role;
@@ -155,9 +156,9 @@ class AccessControlController extends Controller {
             $user     = User::findOrFail($request->id);
             $activity = $user->syncRoles($request->roles);
             if ($activity) {
-                return response()->json("Success", 200);
+                return response()->json("Success", Response::HTTP_OK);
             } else {
-                return response()->json(array('errors' => "Something Went Wrong"), 500);
+                return response()->json(array('errors' => "Something Went Wrong"), Response::HTTP_INTERNAL_SERVER_ERROR);
             }
         }
     }
@@ -174,9 +175,9 @@ class AccessControlController extends Controller {
         $user     = User::findOrFail($id);
         $activity = $user->update(['status' => $this->userActive, 'verification_status' => $this->userActive]);
         if ($activity) {
-            return response()->json("Success", 200);
+            return response()->json("Success", Response::HTTP_OK);
         } else {
-            return response()->json(array('errors' => "Something Went Wrong"), 500);
+            return response()->json(array('errors' => "Something Went Wrong"), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -192,9 +193,9 @@ class AccessControlController extends Controller {
         $user     = User::findOrFail($id);
         $activity = $user->update(['status' => $this->userDeactive, 'verification_status' => $this->userDeactive]);
         if ($activity) {
-            return response()->json("Success", 200);
+            return response()->json("Success", Response::HTTP_OK);
         } else {
-            return response()->json(array('errors' => "Something Went Wrong"), 500);
+            return response()->json(array('errors' => "Something Went Wrong"), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -212,9 +213,9 @@ class AccessControlController extends Controller {
         $deleteResponse = $user->delete();
 
         if ($deleteResponse) {
-            return response()->json("Success", 200);
+            return response()->json("Success", Response::HTTP_OK);
         } else {
-            return response()->json(array('errors' => "Something Went Wrong"), 500);
+            return response()->json(array('errors' => "Something Went Wrong"), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 }

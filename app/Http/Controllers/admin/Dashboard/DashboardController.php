@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Traits\UserTrait;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Yajra\DataTables\DataTables;
 
 class DashboardController extends Controller {
@@ -80,13 +81,13 @@ class DashboardController extends Controller {
         if (User::where('email', $email)->exists()) {
             return response()->json(array(
                 'message' => "Email already exists",
-                'status' => 403
-            ), 403);
+                'status' => Response::HTTP_FORBIDDEN
+            ), Response::HTTP_FORBIDDEN);
         } else {
             return response()->json(array(
                 'message' => "Email is available",
-                'status' => 200
-            ), 200);
+                'status' => Response::HTTP_OK
+            ), Response::HTTP_OK);
         }
     }
 }

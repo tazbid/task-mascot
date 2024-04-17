@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Traits\UserTrait;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
@@ -89,9 +90,9 @@ class CustomerController extends Controller {
 
             $activity = $user->update($attributeNames);
             if ($activity) {
-                return response()->json("Success", 200);
+                return response()->json("Success", Response::HTTP_OK);
             } else {
-                return response()->json(array('errors' => "Something Went Wrong"), 500);
+                return response()->json(array('errors' => "Something Went Wrong"), Response::HTTP_INTERNAL_SERVER_ERROR);
             }
         }
     }
@@ -122,9 +123,9 @@ class CustomerController extends Controller {
             );
             $activity = $user->update($attributeNames);
             if ($activity) {
-                return response()->json("Success", 200);
+                return response()->json("Success", Response::HTTP_OK);
             } else {
-                return response()->json(array('errors' => "Something Went Wrong"), 500);
+                return response()->json(array('errors' => "Something Went Wrong"), Response::HTTP_INTERNAL_SERVER_ERROR);
             }
         }
     }
@@ -182,9 +183,9 @@ class CustomerController extends Controller {
                 $user->verification_status = $this->userActive;
                 $user->verification_code = null;
                 $user->save();
-                return response()->json("Success", 200);
+                return response()->json("Success", Response::HTTP_OK);
             } else {
-                return response()->json(array('errors' => "Invalid Code"), 403);
+                return response()->json(array('errors' => "Invalid Code"), Response::HTTP_FORBIDDEN);
             }
         }
     }
