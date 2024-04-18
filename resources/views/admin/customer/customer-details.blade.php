@@ -61,113 +61,11 @@
                 </div>
                 <!-- /.card -->
             </div>
-
-
-            <!-- About Me Box -->
-            <div class="card card-primary" id="billing-info-div">
-                {{-- <div class="card-header">
-                    <h3 class="card-title">About</h3>
-                </div> --}}
-                <!-- /.card-header -->
-                {{-- <div class="card-body">
-                    @if ($user->details)
-                    <strong><i class="fas fa-signature"></i> First Name</strong>
-
-                    <p class="text-muted">{{$user->details->first_name ? $user->details->first_name : "Not Set"}}</p>
-                    <hr>
-
-                    <strong><i class="fas fa-signature"></i> Last name</strong>
-
-
-                    <p class="text-muted">{{$user->details->last_name ? $user->details->last_name : "Not Set"}}</p>
-
-                    <hr>
-
-                    <strong><i class="fas fa-phone"></i> Phone</strong>
-
-                    <p class="text-muted">{{$user->details->phone ? $user->details->phone : "Not Set"}}</p>
-
-                    <hr>
-
-                    <strong><i class="fas fa-book mr-1"></i> Company</strong>
-
-                    <p class="text-muted">{{$user->details->company ? $user->details->company : "Not Set"}}</p>
-
-                    <hr>
-
-                    <strong><i class="fas fa-globe"></i> Country</strong>
-
-                    <p class="text-muted">{{$user->details->country ? $user->details->country : "Not Set"}}</p>
-                    <hr>
-
-                    <strong><i class="fas fa-city"></i> City</strong>
-
-                    <p class="text-muted">{{$user->details->city ? $user->details->city : "Not Set"}}</p>
-                    <hr>
-
-                    <strong><i class="fas fa-address-card"></i> Address</strong>
-
-                    <p class="text-muted">{{$user->details->address_one ? $user->details->address_one : "Not Set"}}</p>
-                    @else
-
-                    <strong><i class="fas fa-signature"></i> First Name</strong>
-
-                    <p class="text-muted">Not Set</p>
-                    <hr>
-
-                    <strong><i class="fas fa-signature"></i> Last name</strong>
-
-
-                    <p class="text-muted">Not Set</p>
-
-                    <hr>
-
-                    <strong><i class="fas fa-phone"></i> Phone</strong>
-
-                    <p class="text-muted">Not Set</p>
-
-                    <hr>
-
-                    <strong><i class="fas fa-book mr-1"></i> Company</strong>
-
-                    <p class="text-muted">Not Set</p>
-
-                    <hr>
-
-                    <strong><i class="fas fa-globe"></i> Country</strong>
-
-                    <p class="text-muted">Not Set</p>
-                    <hr>
-
-                    <strong><i class="fas fa-city"></i> City</strong>
-
-                    <p class="text-muted">Not Set</p>
-                    <hr>
-
-                    <strong><i class="fas fa-address-card"></i> Address</strong>
-
-                    <p class="text-muted">Not Set</p>
-                    @endif
-                    <hr>
-                </div> --}}
-                <!-- /.card-body -->
-            </div>
             <!-- /.card -->
         </div>
         <!-- /.col -->
         <div class="col-md-9">
             <div class="card">
-                <div class="card-header p-2">
-                    <ul class="nav nav-pills">
-                        {{-- <li class="nav-item"><a class="nav-link active" href="#settings" data-toggle="tab">Settings</a>
-                        </li> --}}
-                        {{-- <li class="nav-item"><a class="nav-link" href="#activity" data-toggle="tab">Subscription</a>
-                        </li> --}}
-                        {{-- <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Subscription
-                                History</a></li> --}}
-
-                    </ul>
-                </div><!-- /.card-header -->
                 <div class="card-body">
                     <div class="tab-content">
                         <div class="active tab-pane" id="settings">
@@ -258,6 +156,13 @@
                             <form id="userResetPasswordForm" class="form-horizontal">
                                 <input type="hidden" name="id" value="{{$user->id}}">
                                 <div class="form-group row">
+                                    <label for="inputName" class="col-sm-2 col-form-label">Old Password</label>
+                                    <div class="col-sm-10">
+                                        <input type="password" id="old_password" class="form-control" name="old_password"
+                                            placeholder="Old Password" required>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
                                     <label for="inputName" class="col-sm-2 col-form-label">Password</label>
                                     <div class="col-sm-10">
                                         <input type="password" id="password" class="form-control" name="password"
@@ -268,7 +173,7 @@
                                     <label for="inputEmail" class="col-sm-2 col-form-label">Confirm Password</label>
                                     <div class="col-sm-10">
                                         <input type="password" class="form-control" name="password_confirmation"
-                                            placeholder="Conform Password" minlength="6" required>
+                                            placeholder="Confirm Password" minlength="6" required>
                                     </div>
                                 </div>
 
