@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin\customer;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Services\CustomerService;
 use App\Traits\UserTrait;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -12,14 +13,20 @@ use Illuminate\Support\Facades\Validator;
 
 class CustomerController extends Controller {
     use UserTrait;
+
+    protected $customerService;
+
+    public function __construct(CustomerService $customerService) {
+        $this->customerService = $customerService;
+    }
+
     /**
      * @name adminProfileView
      * @role Admin Profile View
-     * @param Request $request
      * @return  view with compact array
      *
      */
-    public function adminProfileView(Request $request) {
+    public function adminProfileView() {
         $id   = Auth::user()->id;
         $user = User::where('id', $id)->with('media')->first();
 
@@ -40,10 +47,9 @@ class CustomerController extends Controller {
      * @return  Json response
      *
      */
-
     public function customerUpdateAjax(Request $request) {
-        $id   = $request->id;
-        $user = User::findOrFail($id);
+        $id        = $request->id;
+        $user      = User::findOrFail($id);
 
         $validator = Validator::make(
             $request->all(),
@@ -67,33 +73,7 @@ class CustomerController extends Controller {
         if ($validator->fails()) {
             return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
         } else {
-            $first_name     = $request->first_name;
-            $last_name      = $request->last_name;
-            $full_name      = $first_name . " " . $last_name;
-            $attributeNames = array(
-                'first_name' => $first_name,
-                'last_name'  => $last_name,
-                'full_name'  => $full_name,
-                'email'      => $request->email,
-                'address'    => $request->address,
-                'dob'        => $request->dob,
-                'phone'      => $request->phone,
-            );
-
-            if ($request->hasFile('avatar')):
-                $user->addMedia($request->avatar)->toMediaCollection($this->userProfileImageCollection);
-            endif;
-
-            if ($request->hasFile('id_verification')):
-                $user->addMedia($request->id_verification)->toMediaCollection($this->userIdVerificationImageCollection);
-            endif;
-
-            $activity = $user->update($attributeNames);
-            if ($activity) {
-                return response()->json("Success", Response::HTTP_OK);
-            } else {
-                return response()->json(array('errors' => "Something Went Wrong"), Response::HTTP_INTERNAL_SERVER_ERROR);
-            }
+            return $this->customerService->customerUpdateAjax($request, $user);
         }
     }
 
@@ -118,15 +98,7 @@ class CustomerController extends Controller {
         if ($validator->fails()) {
             return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
         } else {
-            $attributeNames = array(
-                'password' => bcrypt($request->password),
-            );
-            $activity = $user->update($attributeNames);
-            if ($activity) {
-                return response()->json("Success", Response::HTTP_OK);
-            } else {
-                return response()->json(array('errors' => "Something Went Wrong"), Response::HTTP_INTERNAL_SERVER_ERROR);
-            }
+            return $this->customerService->customerUpdatePasswordAjax($request, $user);
         }
     }
 
@@ -174,19 +146,7 @@ class CustomerController extends Controller {
         if ($validator->fails()) {
             return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
         } else {
-            $email = Auth::user()->email;
-            $user = User::where('verification_code', $request->code)
-            ->where('email', '=', $email)
-            ->first();
-
-            if ($user && Auth::user()->id == $user->id) {
-                $user->verification_status = $this->userActive;
-                $user->verification_code = null;
-                $user->save();
-                return response()->json("Success", Response::HTTP_OK);
-            } else {
-                return response()->json(array('errors' => "Invalid Code"), Response::HTTP_FORBIDDEN);
-            }
+            return $this->customerService->verifyCode($request);
         }
     }
 }
