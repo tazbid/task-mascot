@@ -13,6 +13,12 @@ class DashboardController extends Controller {
 
     protected $dashboardService;
 
+    /**
+     * @name __construct
+     * @role constructor
+     * @return  void
+     *
+     */
     public function __construct(DashboardService $dashboardService) {
         $this->dashboardService = $dashboardService;
     }

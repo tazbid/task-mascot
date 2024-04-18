@@ -16,6 +16,12 @@ class CustomerController extends Controller {
 
     protected $customerService;
 
+    /**
+     * @name __construct
+     * @role constructor
+     * @return  void
+     *
+     */
     public function __construct(CustomerService $customerService) {
         $this->customerService = $customerService;
     }
